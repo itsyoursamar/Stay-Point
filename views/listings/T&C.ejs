@@ -1,0 +1,113 @@
+<% layout('/layouts/boilerplate.ejs') -%>
+
+<style>
+    .ph1 h1{
+     font-size: 60px;
+    }
+    .ph1 p{
+        width: 150vh;
+    }
+    #ph3{
+        margin-top: 5vh;
+    }
+
+    .ph1{
+        margin-bottom: 20vh;
+        margin-top: 2vh
+    }
+</style>
+
+
+<body>
+    
+  <!-- privacy & Terms-->
+  <%if(name ==="privacy") {%>
+  <div class="ph1">
+    <h1>Privacy Policy</h1>
+    <p>At Stay Point, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy outlines the types of personal information we collect, how it is used, and the measures we take to safeguard it.</p>
+  
+    <h3 id="ph3">Information We Collect</h3>
+    <ul>
+        <li><p><b>Personal Information:</b> When you use our platform, we may collect personal information such as your name, email address and payment details.
+          </p></li>
+        <li><p><b>Usage Information:</b> We may also collect non-personal information about your interactions with our website, such as the pages visited, actions taken, and device information.</p></li>
+    </ul>
+
+    <h3 id="ph3">Information We Collect</h3>
+    <ul>
+        <li><p><b>Providing Services:</b> We use your personal information to provide and improve our services, including facilitating bookings, managing listings, and offering personalized recommendations.
+          </p></li>
+        <li><p><b>Communication</b> We may use your contact information to communicate with you about your bookings, account updates, promotions, and other relevant information.
+        </p></li>
+
+        <li><p><b>Security:</b> Your information is used to ensure the security of our platform, prevent fraud, and comply with legal obligations.</p></li>
+        <li><p><b>Analytics:</b> We may analyze usage data to understand how our platform is used and to optimize user experience.</p></li>
+    </ul>
+
+    <h3 id="ph3">Data Sharing and Disclosure</h3>
+    <ul>
+        <li><p><b>Third-party Service Providers</b> We may share your information with trusted third-party service providers who assist us in operating our platform, processing payments, and delivering services.
+          </p></li>
+        <li><p><b>Legal Compliance: </b> We may disclose your information in response to legal requests, court orders, or legal proceedings, or to enforce our Terms of Service and other agreements.</p></li>
+    </ul>
+
+    <h3 id="ph3">Data Retention</h3>
+    <p>We retain your personal information for as long as necessary to fulfill the purposes outlined in this Privacy Policy, or as required by law.</p>
+    
+    <h3 id="ph3">Security Measures</h3>
+    <p>We implement appropriate technical and organizational measures to protect your personal information from unauthorized access, disclosure, alteration, or destruction.</p>
+
+    <h3 id="ph3">Contact Us</h3>
+    <p>If you have any questions or concerns about our Privacy Policy or our handling of your personal information, please contact us at Samarjeets605@gmail.com.</p>
+
+    <h3 id="ph3">Updates to Privacy Policy</h3>
+    <p>We may update this Privacy Policy from time to time to reflect changes in our practices or legal requirements. We encourage you to review this page periodically for the latest information.
+
+    </p>
+    </div>
+
+  <%}%>
+
+  <%if(name ==="terms") {%>
+  <div class="ph1">
+    <h1>Terms of Service</h1>
+
+        <p>Welcome to Stay Point! By using our website and services, you agree to comply with and be bound by the following terms and conditions. Please read these Terms of Service carefully before using our platform.</p>      
+        
+        <h3 id="ph3">Acceptance of Terms</h3>
+        <ul>
+            <li><p>By accessing or using our platform, you agree to be bound by these Terms of Service and our Privacy Policy. If you do not agree to these terms, please do not use our services.
+              </p></li>
+          
+        </ul>
+    
+        <h3 id="ph3">User Accounts</h3>
+        <ul>
+            <li><p><b>Registration:</b> To access certain features of our platform, you may need to create an account. You must provide accurate and complete information during the registration process.
+              </p></li>
+            <li><p><b>Account Security:</b> You are responsible for maintaining the confidentiality of your account information and password. You agree to notify us immediately of any unauthorized use of your account.
+            </p></li>
+    
+            <li><p><b>Eligibility:</b> You must be at least 18 years old to create an account and use our services.
+        </ul>
+    
+        <h3 id="ph3">Listing and Booking</h3>
+        <ul>
+            <li><p><b>Listing Properties:</b>Property owners can list their properties on our platform. By listing a property, you represent that you have the legal right to rent out the property and that the listing is accurate and truthful.
+                </p>
+            <li><p><b>Booking Properties: </b> Users can book properties through our platform. When booking, you agree to the terms and conditions set by the property owner.</p></li>
+        </ul>
+    
+        <h3 id="ph3">Payments and Fees</h3>
+        <p><b>Service Fees:</b> We may charge service fees for using our platform. These fees are disclosed at the time of booking or listing.</p>
+        <p><b>Payment Processing:</b> Payments are processed securely through our payment providers. You agree to provide accurate payment information and authorize us to charge your payment method.</p>    
+
+
+        <h3 id="ph3">Disclaimers and Limitation of Liability</h3>
+         <p><b>No Warranty:</b> Our services are provided "as is" without any warranties, express or implied. We do not guarantee the accuracy or reliability of listings or user content.</p>   
+          <p><b>Limitation of Liability:</b> To the fullest extent permitted by law, Stay Point shall not be liable for any indirect, incidental, or consequential damages arising from your use of our platform.</p>  
+
+        </div>
+
+  <%}%>
+</body>

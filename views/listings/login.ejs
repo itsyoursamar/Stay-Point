@@ -1,0 +1,31 @@
+<% layout('/layouts/boilerplate.ejs') -%>    
+
+<div class="row mt-5 mb-3 loginForm col-8 offset-2">
+    <h1 class="col-6 offset-3">Login yourself</h1>
+    <div class="col-6 offset-3 mt-4">
+        <form method="post" action="/login" class="needs-validation" novalidate>
+           <div class="mb-3 ">
+            <label for="username" class="form-label">Username</label>
+            <input name="username" id="username" class="form-control" type="text" required>
+           </div>
+
+
+           <div class="mb-3 ">
+            <label for="password" class="form-label">Password</label>
+            <input name="password" id="password" class="form-control" type="password" required>
+           </div>
+            
+           <button class="btn btn-primary col-12">logIn</button>
+           
+           <div class="mb-3 mt-2">
+                <span class="col-5" style="margin: 0px;">Don't have an account? </span><a class="col-3" href="/signUp">Sign Up</a>
+           </div>
+        </form>
+
+        <div class="mb-3 mt-2">
+            <form method="get" action="/auth/google">
+             <button type="submit" class="btn btn-light border ">   <img src="/icons/google.png"  width="25px" height="25px" alt=""> <span>Continue with google</span></button>
+            </form>
+            </div>
+    </div>
+</div>

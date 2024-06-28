@@ -1,0 +1,125 @@
+<% layout('/layouts/boilerplate.ejs') -%>    
+
+<style>
+  /* The switch - adapted from w3schools.com */
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+.tax-info{
+  display: none;
+}
+
+
+</style>
+<!-- yha head wagera sb hata lenge or khali boierplate waale ko likhlenge wha se inherit krlega -->
+<body>
+
+    <div class="headExplore">
+      <h1>Explore Beyond Boundaries!</h1>
+    </div>
+
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-5" > 
+    <%  for(let listing of allListing) {%>
+      <a href="/Listings/<%= listing._id %>" class="listing-link">
+
+      <div class="card col listing-card" >
+         <img src="<%= listing.image.url%>" class="card-img-top" alt="listing_image" style=" height: 20rem" >
+      <div class="card-img-overlay"></div>
+      <div class="card-body">
+        <p class="card-text"></p><b> <%= listing.title%> </b></p>
+        <p class="card-text"><%= listing.description%></p>
+        <p class="card-text">  <%= listing.location%></p>
+        <p class="card-text">&#8377;<%= listing.price.toLocaleString("en-IN")%>  <span class="tax-info">+ &#8377;<%= listing.price*18/100 %> </span></p>
+        
+      </div>
+    </div>
+       </a>
+    <% } %>
+  </div> 
+  <script>
+     
+      var taxSwitch = document.getElementById('toggleSwitch');
+
+      taxSwitch.addEventListener("click",()=>{
+         let taxInfo=document.getElementsByClassName("tax-info");
+         console.log(taxInfo);
+
+         for(info of taxInfo){
+          
+          if(info.style.display !="inline"){
+          info.style.display="inline";
+         }
+         else{
+          info.style.display="none";
+         }
+
+      }});
+       
+    
+  </script>
+
+      
+</body>
+
+

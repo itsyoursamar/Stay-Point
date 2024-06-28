@@ -1,0 +1,251 @@
+<% layout('/layouts/boilerplate.ejs') -%>
+
+<script>
+  function selectCategory(category) {
+    document.getElementById("categoryInput").value = category;
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var form = document.querySelector('.needs-validation');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      // Get the phone number input
+      var phoneInput = document.querySelector('input[name="listing[contact][ph_no]"]');
+      var phoneValue = phoneInput.value;
+
+      // Check if the phone number is exactly 10 digits
+      var isValidPhoneNumber = /^\d{10}$/.test(phoneValue);
+
+      if (!isValidPhoneNumber) {
+        phoneInput.classList.add('is-invalid');
+        phoneInput.classList.remove('is-valid');
+      } else {
+        phoneInput.classList.remove('is-invalid');
+        phoneInput.classList.add('is-valid');
+      }
+
+      // Validate the entire form
+      if (form.checkValidity() && isValidPhoneNumber) {
+        form.submit();
+      } else {
+        form.classList.add('was-validated');
+      }
+    }, false);
+  }, false);
+</script>
+
+<body class="newListingBody">
+  <div class="newListingForm"> 
+    <div class="row">
+      <div class="col-8 offset-2">
+        <br />
+        <h1 style="font-size: 70px;">Create a New Listing</h1>
+
+        <!-- client validation is also done as form is validated successfully -->
+        <form
+          method="POST"
+          action="/Listings"
+          novalidate
+          class="needs-validation"
+          enctype="multipart/form-data"
+        >
+          <div class="mb-3">
+            <br />
+            <label for="title" class="form-label">Title</label>
+            <input
+              name="listing[title]"
+              type="text"
+              placeholder="Add Your Title Here"
+              class="form-control"
+              required
+            />
+            <div class="invalid-feedback">please check your title</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="description" class="form-label">description</label>
+            <textarea
+              name="listing[description]"
+              id=""
+              cols="30"
+              rows="5"
+              class="form-control"
+              placeholder="Add Description Here"
+              required
+            ></textarea>
+            <div class="invalid-feedback">please check your Description</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="image" class="form-label">Upload Image</label>
+            <input name="listing[image]" type="file" class="form-control" />
+          </div>
+
+          <div class="row">
+            <div class="mb-3 col-5">
+              <label for="price" class="form-label">Price</label>
+              <input
+                name="listing[price]"
+                placeholder="1200"
+                class="form-control"
+                required
+              />
+              <div class="invalid-feedback">please check your price</div>
+            </div>
+
+            <div class="mb-3 col-5">
+              <label for="category" class="form-label">Category</label>
+              <div class="input-group">
+                <input
+                  id="categoryInput"
+                  name="listing[category]"
+                  placeholder=""
+                  class="form-control"
+                  required
+                />
+                <button
+                  class="btn btn-secondary dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  select
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      onclick="selectCategory('Beach')"
+                      >Beach</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      onclick="selectCategory('Mountains')"
+                      >Mountains</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      onclick="selectCategory('Luxurious')"
+                      >Luxurious</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      onclick="selectCategory('Farm')"
+                      >Farms</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      onclick="selectCategory('Swimming Pool')"
+                      >Swimming Pool</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      onclick="selectCategory('Best View')"
+                      >Best View</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      onclick="selectCategory('Apartment')"
+                      >Apartment</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div class="invalid-feedback">Please enter a valid category</div>
+            </div>
+
+            <div class="row">
+              <div class="mb-3 col-5">
+                <label for="Location" class="form-label">Location</label>
+                <input
+                  name="listing[location]"
+                  type="text"
+                  placeholder="location"
+                  class="form-control"
+                  required
+                />
+                <div class="invalid-feedback">please check your Location</div>
+              </div>
+
+              <div class="mb-4 col-5">
+                <label for="country" class="form-label">country</label>
+                <input
+                  name="listing[country]"
+                  type="text"
+                  placeholder="country"
+                  class="form-control"
+                  required
+                />
+                <div class="invalid-feedback">please check your country</div>
+              </div>
+
+            </div>
+          </div>
+          <hr>
+          <h1 class="mt-5" style="font-size: 50px;">Contact Information</h1>
+          
+          <div class="row">
+            <div class="col-5 mb-3 mt-3">
+              <label for="listing[contact]" class="form-label" >Phone Number</label>
+              <input type="text" name="listing[contact][ph_no]" class="form-control" placeholder="Add Contact number" required>
+              <div class="invalid-feedback">Please enter a valid 10-digit phone number</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="house_no" class="form-label">House no</label>
+              <textarea
+                name="listing[contact][house_no]"
+                id=""
+                cols="5"
+                rows="2"
+                class="form-control"
+                placeholder="Add house no."
+                required
+              ></textarea>
+              <div class="invalid-feedback">please check your house no</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="house_location" class="form-label">Locality</label>
+              <textarea
+                name="listing[contact][house_location]"
+                id=""
+                cols="30"
+                rows="2"
+                class="form-control"
+                placeholder="Add house location"
+                required
+              ></textarea>
+              <div class="invalid-feedback">please check your house location</div>
+            </div>
+          </div>
+         
+          <button class="btn btn-dark mb-4 col-1 mt-5" id="add-button">Create</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>

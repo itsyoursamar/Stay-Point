@@ -1,0 +1,154 @@
+<% layout('/layouts/boilerplate.ejs') -%> 
+<script>
+    function selectCategory(category) {
+         document.getElementById('categoryInput').value = category;
+     }
+     document.addEventListener('DOMContentLoaded', function() {
+    var form = document.querySelector('.needs-validation');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      // Get the phone number input
+      var phoneInput = document.querySelector('input[name="listing[contact][ph_no]"]');
+      var phoneValue = phoneInput.value;
+
+      // Check if the phone number is exactly 10 digits
+      var isValidPhoneNumber = /^\d{10}$/.test(phoneValue);
+
+      if (!isValidPhoneNumber) {
+        phoneInput.classList.add('is-invalid');
+        phoneInput.classList.remove('is-valid');
+      } else {
+        phoneInput.classList.remove('is-invalid');
+        phoneInput.classList.add('is-valid');
+      }
+
+      // Validate the entire form
+      if (form.checkValidity() && isValidPhoneNumber) {
+        form.submit();
+      } else {
+        form.classList.add('was-validated');
+      }
+    }, false);
+  }, false);
+ </script>
+<body>
+    <br>
+    
+<form method="post" action="/Listings/<%= list[0]._id %>?_method=PUT" novalidate class="needs-validation" enctype="multipart/form-data">
+        <br>
+        <div class="row ">
+            <div class="col-8 offset-2">  
+                <h1>Edit Your Data</h1>
+       <div class="mb-4">
+            <label for="title" class="form-label" >Title</label>
+           <input name="listing[title]" type="text" placeholder="title" value="<%= list[0].title  %>" class="form-control" required>
+           <div class="invalid-feedback">please check your title</div>
+        </div>
+
+       <div class="mb-4">
+            <label for="description" class="form-label" >Description</label>
+           <textarea name="listing[description]" id="" cols="30" rows="5" placeholder="description" class="form-control" required><%= list[0].description  %></textarea>
+           <div class="invalid-feedback">please check your Description</div>
+       </div>
+
+       <div class="mb-4">
+        <label for="">Orginal Image</label> <br>
+        <img height="250" width="300" src="<%= org_image%>" alt="listed_image" >
+        </div>
+
+        <div class="mb-4">
+            <label for="image" class="form-label">Upload new image</label>
+            <input name="listing[image]" type="file" placeholder="image URL" class="form-control"  >
+            <div class="invalid-feedback">please check your image</div>
+        </div>
+        
+        <div class="row"> 
+
+            <div class="mb-4 col-4">
+                <label for="price" class="form-label">Price</label>   
+           <input name="listing[price]" type="number" placeholder="price" class="form-control" value="<%= list[0].price  %>" required>
+           <div class="invalid-feedback">please check your price</div>
+            </div>
+                
+            <div class="mb-4 col-4">
+                     <label for="Category" class="form-label">Category</label>   
+
+                    <div class="input-group">
+                        <input id="categoryInput" name="listing[category]"  class="form-control" value="<%= list[0].category  %>" required>
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            select 
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="#categoryInput" onclick="selectCategory('Beach')">Beach</a></li>
+                            <li><a class="dropdown-item" href="#categoryInput" onclick="selectCategory('Mountains')">Mountains</a></li>
+                            <li><a class="dropdown-item" href="#categoryInput" onclick="selectCategory('Luxurious')">Luxurious</a></li>
+                            <li><a class="dropdown-item" href="#categoryInput" onclick="selectCategory('Farm')">Farms</a></li>
+                            <li><a class="dropdown-item" href="#categoryInput" onclick="selectCategory('Swimming Pool')">Swimming Pool</a></li>
+                            <li><a class="dropdown-item" href="#categoryInput" onclick="selectCategory('Best View')">Best View</a></li>
+                            <li><a class="dropdown-item" href="#categoryInput" onclick="selectCategory('Apartment')">Apartment</a></li>
+                        </ul>
+                    </div>
+                    <div class="invalid-feedback">please enter valid category</div>
+            </div>
+                
+        </div>
+
+        <div class="row">
+        <div class="mb-4 col-4">
+            <label for="location" class="form-label">Location</label>
+            <input name="listing[location]" type="text" placeholder="location" class="form-control" value="<%= list[0].location  %>" required>
+            <div class="invalid-feedback">please check your location</div>
+        </div>
+        
+        <div class="mb-4 col-4">
+            <label for="country" class="form-label">country</label>
+            <input name="listing[country]" type="text" placeholder="country" class="form-control" value="<%= list[0].country  %>">
+            <div class="invalid-feedback">please check your country</div>
+        </div>
+
+        <hr>
+        <h1 class="mt-5" style="font-size: 50px;">Contact Information</h1>
+        
+        <div class="row">
+          <div class="col-5 mb-3 mt-3">
+            <label for="listing[contact]" class="form-label" >Phone Number</label>
+            <input type="text" name="listing[contact][ph_no]" class="form-control" value="<%= list[0].contact.ph_no%>"  required>
+            <div class="invalid-feedback">Please enter a valid 10-digit phone number</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="house_no" class="form-label">House no</label>
+            <textarea
+              name="listing[contact][house_no]"
+              id=""
+              cols="5"
+              rows="2"
+              class="form-control"
+              required
+            ><%= list[0].contact.house_no%></textarea>
+            <div class="invalid-feedback">please check your house no</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="house_location" class="form-label">Locality</label>
+            <textarea
+              name="listing[contact][house_location]"
+              id=""
+              cols="30"
+              rows="2"
+              class="form-control"
+              required
+            ><%= list[0].contact.house_location%></textarea>
+            <div class="invalid-feedback">please check your house location</div>
+          </div>
+        </div>
+    </div>
+        <button  class="btn btn-dark mb-4 col-1" id="add-button">Edit</button>
+        
+    </form>
+</div>    
+</div>
+</body>

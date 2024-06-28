@@ -1,0 +1,293 @@
+<% layout('/layouts/boilerplate.ejs') -%>
+<script>
+   let map_Token="<%= process.env.MAP_TOKEN%>";
+   let coordinates=`<%= list[0].geometry.coordinates%>`;
+   coordinates=coordinates.split(',');
+   let title="<%= list[0].location,list[0].country%>"
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<body>
+  <div class="row">
+    <div class="col-6 offset-2 " >
+      <br />
+      <h1><%= list[0].title%></h1>
+    </div>
+    <div class="card col-6 offset-2" style="border: none !important;">
+      <img
+        src="<%= list[0].image.url%>"
+        class="card-img-top show-img"
+        alt="listing_image"
+      />
+      <em>Owned by <%= list[0].owner.username%></em>
+      <div class="card-body">
+
+        <p class="card-text"><%= list[0].description%></p>
+        <p>price:&#8377;<%= list[0].price.toLocaleString("en-IN")%></p>
+        <!-- .toLocaleString("en-IN") this is used to just to add commas with respect to indian standards-->
+        <p>location: <%= list[0].location%></p>
+        <p>Country: <%= list[0].country%></p>
+        <br>
+        <h4><span><b>Total:</b></span> &#8377;<%= list[0].price* 18/100+list[0].price%></h4>
+        <br>
+       
+        <% if(currUser && currUser.host==false) {%>
+          <form class="pay-form" onsubmit="handlePayment(event)">
+            <button type="submit"  class="btn btn-primary">Book now</button>
+          </form>  
+        <%}%>
+
+        <% if(currUser && currUser.host==true) {%>
+          <form class="pay-form" onsubmit="handlePayment(event)">
+        <h4 style="color: rgb(255, 0, 123); font-style: italic; ">You can only view through Host ID</h4>
+          </form>  
+        <%}%>
+
+        <% if(!currUser) {%>
+          <form method="get" action="/Listings/host" >
+            <button type="submit"  class="btn btn-primary">Book now</button>
+          </form>  
+        <%}%>
+
+      </div>
+    </div>
+
+   
+    <% if (currUser && order && !(list[0].owner._id.equals(currUser._id) )) { %>
+      <% let isOrdered = false;  %>
+      <%for(let data of order){ %>
+       <% if(data.user._id.toString() === currUser._id.toString()) {%>
+            <%  isOrdered = true; %>
+        <%}%>
+        <%}%>
+  
+
+      <% if (isOrdered) { %>
+        
+        <div class="col-1 chat_icondiv">
+          <form method="get" action="/StayChat/<%= list[0]._id%>">
+          <button type="submit" class="chat_icon">
+        <img src="/icons/chat.png" alt="">
+      </button>
+        <p style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">StayChat</p>
+    </form>
+  </div>
+      <% } %>
+      <%}%>
+    
+
+
+    <% if(currUser && list[0].owner._id.equals(currUser._id)){%> 
+    <div class="col-1">
+      <form method="get" action="/Listings/<%= list[0]._id%>/edit">
+        <button
+          class="btn btn-dark"
+          style="background-color: rgba(255, 0, 0, 0.815)"
+        >
+          Edit
+        </button>
+      </form>
+    </div>
+
+    <div class="col-2">
+      <form method="post" action="/Listings/<%= list[0]._id%>?_method=DELETE">
+        <button class="btn btn-dark">Delete</button>
+      </form>
+    </div>
+    <%}%>
+
+
+   
+    <div class="col-8 offset-2 mb-3">
+      <% if(currUser){%> 
+      <hr />
+        <h4>Leave a Review</h4>
+        <form method="post" action="/Listings/<%= list[0]._id%>/reviews">
+         
+          
+      
+          <div class="mb-3">
+            <label class="form-label" for="rating">Rating</label>
+          <fieldset class="starability-slot">
+            <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="0" checked aria-label="No rating." />
+            <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+            <label for="first-rate1" title="Terrible">1 star</label>
+            <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+            <label for="first-rate2" title="Not good">2 stars</label>
+            <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+            <label for="first-rate3" title="Average">3 stars</label>
+            <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+            <label for="first-rate4" title="Very good">4 stars</label>
+            <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+            <label for="first-rate5" title="Amazing">5 stars</label>
+          </fieldset>
+        </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="comment">Comments</label>
+            <textarea
+              class="form-control"
+              name="review[comment]"
+              id="comment"
+              cols="30"
+              rows="5"
+              required
+            ></textarea>
+            <div class="invalid-feedback">Please submit some comments for review</div>
+          </div>
+          <button class="btn btn-outline-dark">Submit</button>
+        </form>
+        <%}%>
+      
+        <% if(!list[0].reviews.length >0){%>
+          <hr>
+          <h4 class="mb-3 mt-5"><b>All Reviews</b></h4>
+            <p class="mb-3">No reviews yet!</p>
+         <%}%> 
+        <% if(list[0].reviews.length >0){%>
+          <hr>
+          <h4 class="mb-3 mt-5"><b>All Reviews</b></h4>
+        <div class="row"> 
+            <%for(review of list[0].reviews){ %>
+                <div class="card col-5 offset-1 mb-3" >
+                    <div class="card-body">
+                       <%if(!review.author.dp){ %>
+                        <h5 class="carad-title text-muted text-xs fs-6"><img  src="/icons/profile.png" width="20px" height="20px" alt=""> @<%= review.author.username%></h5>
+                        <%}%>
+
+                        <%if(review.author.dp){ %>
+                        <h5 class="carad-title text-muted text-xs fs-6"><img id="reviewDP" src="<%=review.author.dp%>" width="20px" height="20px" alt=""> @<%= review.author.username%></h5>
+                         <%}%> 
+                        <p class="text-muted text-xs fs-6"><%= review.createdAt.toLocaleDateString('en-US') %></p>
+                        <p class="card-text"><% for(let i = 0; i < review.rating; i++) { %>
+                            <i class="fas fa-star" style="color: gold;"></i>
+                        <% } %></p>
+                        <p class="card-text"><%= review.comment%></p>
+                    
+                            
+                    <% if(currUser && currUser._id.equals(review.author._id)){%> 
+                    <form  method="POST" action="/Listings/<%= list[0]._id%>/reviews/<%= review._id%>?_method=DELETE" class="mb-1">
+                        <button class="btn btn-sm btn-dark">Delete</button>
+                    </form>
+                    <%}%>
+                  </div>   
+                </div>
+               
+            <%}%>
+
+        </div>
+ 
+        <%}%>
+      </div>
+  
+      <div class="col-8 offset-2 mb-3">
+        <hr>
+        <h3>Where you''ll be</h3>
+        <div id="map">
+
+        <div id="menu">
+          <input id="satellite-streets-v12" type="radio" name="rtoggle" value="satellite" checked="checked">
+         
+          <label for="satellite-streets-v12">satellite streets</label>
+          <input id="light-v11" type="radio" name="rtoggle" value="light">
+          <label for="light-v11">light</label>
+          <input id="dark-v11" type="radio" name="rtoggle" value="dark">
+          <label for="dark-v11">dark</label>
+          <input id="streets-v12" type="radio" name="rtoggle" value="streets">
+          <label for="streets-v12">streets</label>
+          <input id="outdoors-v12" type="radio" name="rtoggle" value="outdoors">
+          <label for="outdoors-v12">outdoors</label>
+        </div>
+        </div>
+      </div>
+  </div>
+  <script src="/js/map.js"></script>
+
+    
+</body>
+
+
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+
+function handlePayment(e) {
+  var currUserId = "<%= currUser ? currUser._id : '' %>";
+  var listId = "<%= list[0]._id %>";
+
+ 
+      e.preventDefault();
+
+      // Collect any necessary form data if needed
+      var formData = {
+          amount: '<%= list[0].price %>',
+          name: '<%= list[0].title %>',
+          description: '<%= list[0].description %>',
+          image: '<%= list[0].image.url %>'
+      };
+      
+      $.ajax({
+          url: "/createOrder",
+          type: "POST",
+          data: formData,
+          success: function(res){
+              if(res.success){
+                  var options = {
+                      "key": res.key_id,
+                      "amount": res.amount.toString(),
+                      "currency": "INR",
+                      "name": res.product_name,
+                      "description": res.description,
+                      "image": res.image,
+                      "order_id": res.order_id,
+                      "handler": function (response){
+                          // Payment succeeded, send request to update user data
+                         alert('payment succeeded');
+
+                         $.ajax({
+                      url: "/fetchOrder",
+                      type: "post",
+                      data: { listId: listId, userId: currUserId },
+                      success: function(res){
+                           // Use the order information as needed
+                      },
+                      error: function(err) {
+                          console.error("Error fetching order information:", err);
+                      }
+                  });
+                      },
+                      "prefill": {
+                          "name": res.name,
+                          "email": res.email
+                      },
+                      "notes": {
+                          "description": res.description
+                      },
+                      "theme": {
+                          "color": "#2300a3"
+                      }
+                  };
+                  var razorpayObject = new Razorpay(options);
+                  razorpayObject.on('payment.failed', function (response){
+                      alert("Payment failed!");
+                  });
+                  razorpayObject.open();
+
+                  // Fetch order information
+                
+              } else {
+                  alert(res.msg);
+              }
+          },
+          error: function(err) {
+              alert('An error occurred. Please try again.');
+          }
+      });
+
+}
+
+</script>
+
+
+

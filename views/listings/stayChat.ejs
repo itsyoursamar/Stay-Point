@@ -1,0 +1,213 @@
+<% layout('/layouts/boilerplate.ejs') -%>    
+
+<link rel="stylesheet" href="/css/stayChat.css">
+
+<body>
+    <div class="row  mt-3" id="whole">
+        <div class="col-5 m-5" id="custChat">
+            <h1 id="custChat_head">Host Information</h1>
+            <p><b>Contact Number:</b> <%=contact.ph_no%></p>
+            <p><b>Exact Address:</b> <%=contact.house_no %>,<%= contact.house_location %></p>
+        </div>
+
+        <div class="col mt-3">
+            <h1 id="chatHead">StayChat</h1>
+            <div id="chat">
+                <div class="stayChat">
+                    <% if(!owner.dp){%>
+                    <h3><span><img src="/icons/profile.png" width="40px" height="40px" alt=""></span><%= owner.username%></h3>
+                    <%}else{ %>
+                    <h3><span><img id="host_dp" src="<%= owner.dp%>" width="40px" height="40px" alt=""></span><%= owner.username%></h3>
+                    <%}%>
+
+            
+                    <span id="<%= owner._id%>-status" class="status"><i>Offline</i></span>
+                   
+                </div>
+                <ul class="msg-containr" id="msg-containr"> 
+                    <li class="msg-left">
+                        <p class="msg">Lorem ipsum dolor sit amet consectetur.
+                            <span><i></i></span>
+                        </p>
+                    </li>
+               
+                    <li class="msg-right">Lorem ipsum dolor sit amet.
+                        <p class="msg">
+                            <span><i></i></span>
+                        </p>
+                    </li>
+                </ul>
+                <form class="msg-form" id="msg-form">
+                    <input type="text" name="msg" id="msg-input" class="msg-input">
+                    <div class="v-divider"></div>
+                    <button type="submit" class="send-button">
+                        send <span><i class="fas fa-paper-plane"></i></span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+
+<!-- client socket library -->
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js" integrity="sha512-hUhvpC5f8cgc04OZb55j0KNGh4eh7dLxd/dPSJ5VyzqDWxsayYbojWyl5Tkcgrmb/RVKCRJI1jNlRbVP4WWC4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<script>
+    var socket = io('/stayChat', {
+        auth: {
+            token: "<%= currUser._id %>"
+        }
+    });
+
+    socket.on('connect', function() {
+        console.log('Connected to stayChat namespace');
+    });
+
+    function formatDateTime(dateTimeString) {
+        var date = new Date(dateTimeString);
+        var year = date.getUTCFullYear();
+        var month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
+        var day = ('0' + date.getUTCDate()).slice(-2);
+        var dateString = day + '-' + month + '-' + year;
+        var hours = date.getUTCHours();
+        var minutes = date.getUTCMinutes();
+        var timeString = ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
+        return dateString + ',' + timeString;
+    }
+
+    $(document).ready(function() {
+        console.log("Document is ready");
+
+        var senderId = "<%= currUser._id %>";
+        var receiverId = "<%= owner._id %>";
+
+
+        socket.emit('existsChat',{senderId: senderId, receiverId: receiverId});
+
+        console.log("senderID: " + senderId);
+        console.log("receiverId: " + receiverId);
+
+        $('#msg-form').submit(function(event) {
+            event.preventDefault();
+            var message = $('#msg-input').val();
+            var currentTime = new Date().toISOString();
+            var formattedDateTime = formatDateTime(currentTime);
+
+            $.ajax({
+                url: '/host_StayChat',
+                type: 'POST',
+                data: {
+                    senderId: senderId,
+                    receiverId: receiverId,
+                    message: message,
+                },
+                success: function(data) {
+                    if (data.success) {
+                        console.log(data);
+                        $('#msg-input').val('');
+                        let chat = data.data.message;
+                        let html = `
+                        <li class="msg-right">
+                            <p class="msg">${chat}
+                                <span><i>${formattedDateTime}</i></span>
+                            </p>
+                        </li>`;
+                        $('#msg-containr').append(html);
+                        scrollChat()// Emit the message to the server
+                        socket.emit('newChat', data.data); 
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            });
+        });
+
+        // Listen for new messages from the host
+        socket.on('loadNewChat', function(data) {
+            var currentTime = new Date().toISOString();
+            var formattedDateTime = formatDateTime(currentTime);
+            let html = `
+            <li class="msg-left">
+                <p class="msg">${data.message}
+                    <span><i>${formattedDateTime}</i></span>
+                </p>
+            </li>`;
+            $('#msg-containr').append(html);
+            scrollChat()
+        });
+
+        // Listen for online/offline status updates
+        socket.on('getOnlineUser', function(data) {
+          var statusElement = $('#' + data.currHostId + '-status');
+    
+        if (statusElement.length) {
+         statusElement.text('Online');
+        } else {
+           console.error('Element not found for ID:', data.currHostId + '-status');
+        }
+});
+
+        socket.on('getOfflineUser', function(data) {
+        let jsonObj = JSON.parse(JSON.stringify(data));
+        let userId = jsonObj.hostOffed[0]._id;
+        console.log("host ki id"+userId);
+          var statusElement = $('#' + userId + '-status');
+
+          if(statusElement.length){
+            statusElement.text(`Offline`);
+          }
+          else{
+            console.error('Element not found for ID:', userId + '-status');
+          }
+        });
+
+         //load older chats
+         socket.on('loadChat',function(data){
+            $('#msg-containr').html('');
+
+            var chats=data.chats;
+            let html=``;
+
+            for(let x=0; x<chats.length;x++){
+                let addClass=``;
+
+                if(chats[x][`senderId`] === senderId){
+                    addClass=`msg-right`;
+                }else{
+                    addClass=`msg-left`;
+                }
+             
+                html+= `<li class=${addClass}>
+                            <p class="msg">${chats[x][`message`]}
+                                <span><i>${extractTime(chats[x][`createdAt`])}</i></span>
+                            </p>
+                        </li>`
+            }
+            $(`#msg-containr`).append(html);
+            scrollChat();
+        });
+
+        function extractTime(data){
+            let timestamp = data;
+            let dateTime = timestamp.split('T'); // Splitting timestamp into date and time
+            let date = dateTime[0]; // Extracting date
+            let time = dateTime[1].split('.')[0]; // Extracting time and removing milliseconds
+            let [hour, minute, _] = time.split(':'); // Extracting hour and minute
+
+            return `${date}, ${hour}:${minute}`; // Returning formatted time
+        }
+
+        function scrollChat(){
+             $(`#msg-containr`).animate({
+                scrollTop: $(`#msg-containr`).offset().top +$(`#msg-containr`)[0].scrollHeight,
+             },0);
+        }
+      
+    });
+</script>
+
+
+<script src="/js/chat.js"></script>

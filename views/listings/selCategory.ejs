@@ -1,0 +1,81 @@
+<% layout('/layouts/boilerplate.ejs') -%>
+
+
+<body>
+     <!-- listing -->
+     <%if(name ==="Trending"){%>
+    <div class="headCategory">
+      <h1>Trending!</h1>
+      <h3>Discover What's Hot Right Now.</h3>
+    </div>
+    <%}%>
+
+    <%if(name ==="Apartment"){%>
+      <div class="headCategory">
+        <h1>Apartment!</h1>
+      <h3>Find Your Urban Sanctuary - Explore Our Trending Apartment Listings.</h3>
+      </div>
+      <%}%>
+
+      <%if(name ==="Beach"){%>
+        <div class="headCategory">
+          <h1>Beachfront!</h1>
+          <h3>Dive into Paradise - Explore Our Trending Beachfront Getaways.</h3>
+        </div>
+        <%}%>
+
+        <%if(name ==="Farm"){%>
+          <div class="headCategory">
+            <h1>Farms!</h1>
+            <h3>Escape to Rural Bliss - Discover Our Trending Farm Retreats.</h3>
+          </div>
+        <%}%>
+
+        <%if(name ==="Mountains"){%>
+          <div class="headCategory">
+            <h1>Mountains!</h1>
+            <h3>Embrace Serenity at Altitude - Explore Our Trending Mountain Escapes.</h3>
+          </div>
+        <%}%>
+
+        <%if(name ==="Best View"){%>
+            <div class="headCategory">
+              <h1>Amazing Views!</h1>
+              <h3>Elevate Your Perspective - Explore Our Trending Listings with Amazing Views.</h3>
+            </div>
+        <%}%>
+              
+        <%if(name ==="Swimming Pool"){%>
+            <div class="headCategory">
+              <h1>Amazing Pools!</h1>
+              <h3>Indulge in Aquatic Luxury - Dive into Our Trending Listings with Amazing Pools.</h3>
+            </div>
+        <%}%>
+
+        <%if(name ==="Luxurious"){%>
+            <div class="headCategory">
+              <h1>Luxurious!</h1>
+              <h3>Step into Unparalleled Elegance - Explore Our Trending Listings for Luxurious Escapes.</h3>
+            </div>
+        <%}%>
+
+  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-5" > 
+    <%  for(let listing of list) {%>
+      <a href="/Listings/<%= listing._id %>" class="listing-link">
+
+      <div class="card col listing-card" >
+         <img src="<%= listing.image.url%>" class="card-img-top" alt="listing_image" style=" height: 20rem" >
+      <div class="card-img-overlay"></div>
+      <div class="card-body">
+        <p class="card-text"></p><b> <%= listing.title%> </b></p>
+        <p class="card-text"><%= listing.description%></p>
+        <p class="card-text">  <%= listing.location%></p>
+        <p class="card-text">&#8377;<%= listing.price.toLocaleString("en-IN")%></p>
+        
+      </div>
+    </div>
+       </a>
+    <% } %>
+  </div> 
+
+</body>

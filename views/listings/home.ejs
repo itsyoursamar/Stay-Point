@@ -1,0 +1,133 @@
+<% layout('/layouts/boilerplate.ejs') -%>
+
+
+
+<body>
+  
+  <div class="filters  ">
+    <div class="filter">
+      <div class="icon">
+      <a href="/Trending"> <img src="/icons/fire.png"  alt=""></a>
+      </div>
+      <p>Trending</p>
+    </div>
+
+    <div class="filter">
+      <div class="icon">
+       <a href="/Apartment"> <img src="/icons/home.png"  alt=""></a>
+       </div>
+      <p>Apartment</p>
+    </div>
+
+    <div class="filter">
+      <div class="icon">
+       <a href="/Beach"> <img src="/icons/beach.png"  alt=""></a>
+       </div>
+      <p>Beachfront</p>
+    </div>
+
+    <div class="filter">
+      <div class="icon">
+        <a href="/Farm"><img src="/icons/farms.png"  alt=""></a>
+       </div>
+      <p>Farms</p>
+    </div>
+
+    <div class="filter">
+      <div class="icon">
+        <a href="/Mountains"><img src="/icons/mountain.png"  alt=""></a>
+       </div>
+      <p>Moutains</p>
+    </div>
+
+    <div class="filter">
+      <div class="icon">
+        <a href="/Best View"><img src="/icons/window.png"  alt=""></a>
+       </div>
+      <p>Amazing views</p>
+    </div>
+
+    <div class="filter">
+      <div class="icon">
+        <a href="/Swimming Pool"><img src="/icons/pool.png"  alt=""></a>>
+       </div>
+      <p>Amazing pools</p>
+    </div>
+
+    <div class="filter">
+      <div class="icon">
+       <a href="/Luxurious"> <img src="/icons/Luxurious.png"  alt=""></a>
+       </div>
+      <p>Luxurious</p>
+    </div>
+  </div>
+
+
+  <div class="head mt-5 animation-text md-5">
+    <h1>Welcome to Stay Point!</h1>
+  </div>
+
+    
+
+
+  <!-- listing -->
+  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-5 list-top " > 
+    <%  for(let listing of allListing) {%>
+      <a href="/Listings/<%= listing._id %>" class="listing-link">
+
+      <div class="card col listing-card" >
+         <img src="<%= listing.image.url%>" class="card-img-top" alt="listing_image" style=" height: 20rem" >
+      <div class="card-img-overlay"></div>
+      <div class="card-body">
+        <p class="card-text"></p><b> <%= listing.title%> </b></p>
+        <p class="card-text"><%= listing.description%></p>
+        <p class="card-text">  <%= listing.location%></p>
+        <p class="card-text">&#8377;<%= listing.price.toLocaleString("en-IN")%></p>
+        
+      </div>
+    </div>
+       </a>
+    <% } %>
+  </div> 
+
+  <h1 id="our-serv">Our Services</h1>
+
+  <div class="Services">
+    <div class="Service">
+      <h3>Explore Global Listings</h3>
+      <p>
+        Discover a world of accommodation options at your fingertips. Whether you're searching for luxury hotels, cozy rooms, beachfront properties, or mountain retreats, our platform offers an extensive selection of places to stay around the globe. Find your perfect getaway with ease and convenience.
+        </p>
+    </div>
+ 
+
+
+      <div class="Service">
+        <h3>Earn by Listing Your Property</h3>
+        <p>
+          Turn your property into a source of income by listing it on our platform. Whether you have a house, apartment, or unique space, you can reach millions of potential guests. Set your own prices, manage your availability, and start earning from your property today.          </p>
+      </div>
+
+
+        <div class="Service">
+          <h3>Verified Listings and Reviews</h3>
+          <p>
+            Feel confident in your choice with verified listings and genuine reviews from previous guests. Our platform prioritizes transparency and reliability, giving you access to honest feedback and ensuring a trustworthy booking experience.
+          </p>
+         </div>
+
+          <div class="Service">
+            <h3>Flexible Cancellation Policiess</h3>
+            <p>
+              Plans change, and we understand that. Many of our listings offer flexible cancellation policies, allowing you to book with confidence. Review each property's cancellation terms to find the best options for your travel plans.              </p>
+          </div>
+    
+
+        
+            <div class="Service">
+              <h3>24/7 Customer Support</h3>
+              <p>
+                Our dedicated support team is available around the clock to assist you with any questions or concerns. Whether you need help with booking, listing your property, or any other aspect of our services, we're here to provide prompt and friendly assistance.                </p>
+            </div>
+</div>
+</body>

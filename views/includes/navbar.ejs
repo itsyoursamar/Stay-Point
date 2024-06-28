@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stay Point</title>
+    <link rel="icon" href="/icons/logo.png"  !important>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+  </head>
+  <style>
+    .navsearch-btn {
+      background-color: rgba(255, 0, 64, 0.715);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 10px;
+      transition: none; /* Disable transition effects */
+    }
+    .navsearch-btn:hover {
+      background-color: red; /* Ensure background stays red */
+      color: white; /* Ensure text stays white */
+    }
+    .navsearch-input {
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      width: 300pt !important ;
+      border-radius: 30px !important;
+      transition: transform 0.3s, box-shadow 0.3s; /* Add transition for transform and box-shadow */
+    }
+    .navsearch-input input {
+      -webkit-appearance: none; /* Remove clear button in Safari */
+      -moz-appearance: none; /* Remove clear button in Firefox */
+      appearance: none; /* Remove clear button in other browsers */
+      border-radius: 30px;
+      overflow: hidden  ;
+    }
+    .snavearch-input input:focus {
+      overflow: hidden;
+      outline: none; /* Remove default focus outline */
+      box-shadow: none; /* Remove default focus box shadow */
+    }
+    .navsearch-input:hover,
+    .navsearch-input:focus-within {
+      transform: translateY(10px) scale(1.1); /* Move down and enlarge */
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;    }
+  </style>
+  <body>
+    <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top " >
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/"
+          >
+          <img src="/icons/logo.png" width="56px" height="56px" alt="">
+          <!-- <i  class="fa-regular fa-compass"></i -->
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+            <a class="nav-link" href="/Listings">Explore </a>
+          </ul>
+
+          <!-- search bar -->
+          <%if(currPath ==='/'){ %>
+          <form id="searchForm" method="get"  class="d-flex mx-auto" role="search">
+            <div class="aritifcial"> 
+            <div class="input-group navsearch-input">
+              <input
+                type="search"
+                class="form-control"
+                placeholder="Search"
+                aria-label="Search"
+                id="navsearch-input"
+              />
+              <button class="btn navsearch-btn" type="submit">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </div>
+          </form>
+          <%}%>
+          <!-- search bar ends here -->
+        </div>
+
+        <%if(currPath ==="/Listings") {%>
+        <div class="tax-toggle col-2">  
+          <div class="form-check-reverse form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="toggleSwitch">
+            <label class="form-check-label" for="flexSwitchCheckDefault">Display Total after taxes</label>
+          </div>
+      </div>
+        <%}%>
+        
+        <div class="navbarNav text-center">
+          
+          <ul class="navbar-nav">
+            
+            
+            <%if(currPath ==="/") {%>
+              <a class="nav-link" href="/Listings/host" >Host & Earn</a>
+            <%}%>
+            <% if(!currUser){%>
+              <a class="nav-link"  href="/login"><img src="/icons/login.png" width="30px" height="30px" alt=""></a>
+              <% }%>
+            
+            <% if(currUser){%>
+              
+              <%if(currUser && currUser.host ==true){ %>
+             
+                  <a class="nav-link" href="/host_stayChat/<%= currUser._id%>"><img src="/icons/chat.png" width="30px" height="30px" alt=""></a>
+        
+              
+              <%}%>
+              <%if(currUser.dp){ %>
+                <a class="nav-link" id="dp" href="/profile"><img src="<%= currUser.dp%>" width="40px" height="40px" alt=""></a>
+                <% }%>
+                <%if(!currUser.dp){ %>
+                  <a class="nav-link" href="/profile"><img src="/icons/profile.png" width="30px" height="30px" alt=""></a>
+                  <% }%>
+
+                  <a class="nav-link" href="/logout"><img src="/icons/logout (1).png" width="30px" height="30px" alt=""></a>
+            <% }%>
+
+
+                </ul>
+              </div>
+            </div>
+          </nav>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const searchForm = document.getElementById('searchForm');
+        const searchInput = document.getElementById('navsearch-input');
+
+        searchForm.addEventListener('submit', function(event) {
+          event.preventDefault(); // Prevent the form from submitting the traditional way
+          const inputValue = searchInput.value.trim();
+          if (inputValue) {
+            searchForm.action = `/search/${inputValue}`;
+            searchForm.submit();
+          }
+        });
+      });
+    </script>
+      
+ 
+  </body>
+</html>

@@ -1,0 +1,59 @@
+<script>
+  function removeAlerts() {
+    const alerts = document.querySelectorAll('.common-alert');
+    alerts.forEach(alert => {
+      setTimeout(() => {
+        alert.remove();
+      }, 3000); // 3 seconds
+    });
+  }
+
+  // Call the function when the page is loaded
+  window.addEventListener('DOMContentLoaded', () => {
+    removeAlerts();
+  });
+</script>
+
+
+   <% if (success && success.length) { %>
+    <div class="alert alert-success alert-dismissible fade show col-6 offset-3 common-alert" role="alert">
+      <%= success %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <% } %>
+    
+    <% if (del && del.length) { %>
+    <div class="alert alert-success alert-dismissible fade show col-6 offset-3 common-alert" role="alert">
+      <%= del %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <% } %>
+    
+    <% if (newReview && newReview.length) { %>
+    <div class="alert alert-success alert-dismissible fade show col-6 offset-3 common-alert" role="alert">
+      <%= newReview %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <% } %>
+    
+    <% if (delReview && delReview.length) { %>
+    <div class="alert alert-success alert-dismissible fade show col-6 offset-3 common-alert" role="alert">
+      <%= delReview %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <% } %>
+    
+    <% if (listUpdated && listUpdated.length) { %>
+    <div class="alert alert-success alert-dismissible fade show col-6 offset-3 common-alert" role="alert">
+      <%= listUpdated %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <% } %>
+    
+    <% if (error && error.length) { %>
+    <div class="alert alert-danger alert-dismissible fade show col-6 offset-3 error-alert" role="alert">
+      <%= error %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <% } %>
+    

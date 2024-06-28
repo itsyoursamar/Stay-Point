@@ -1,0 +1,140 @@
+#custChat {
+    padding: 0px !important;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+#custChat_head {
+    font-size: 60px;
+    font-weight: 600;
+}
+
+#chat {
+    position: relative; /* Allow child elements to be positioned absolutely */
+    overflow: hidden;
+    border-radius: 20px;
+    padding: 0px !important;
+    border: 5px solid rgba(255, 0, 0, 0.273);
+    background-color: #f8f9fa; /* Optional, for visual clarity */
+    height: 30rem;
+    display: flex;
+    flex-direction: column; /* Ensure child elements stack vertically */
+    justify-content: space-between; /* Distribute space between elements */
+    cursor: pointer;
+}
+
+.stayChat {
+    padding: 5px;
+    border: 1px solid black;
+    background-color: rgba(255, 0, 0, 0.563);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    flex-wrap: wrap;
+    align-items: start;
+    top: 0;
+    width: 100%; /* Ensure it spans the full width of the parent */
+   
+}
+
+.stayChat > h3{
+    margin: 0px ;
+}
+
+.stayChat > span{
+    font-size: 13px;
+}
+
+
+#chatHead {
+    text-align: center;
+    font-size: 50px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+
+
+.msg-input {
+  flex-grow: 1;
+  height: 48px;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  padding: 0 12px;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.msg-form{
+    display: flex;
+  justify-content: space-between;
+  width: 100%;
+}    
+
+
+.send-button {
+  height: 48px;
+  font-size: 16px;
+  border: none;
+  padding: 0px 20px;
+  outline: none;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.v-divider {
+  height: 48px;
+  width: 2px;
+  background-color: #f6f6f6;
+}
+
+.msg-containr{
+    display: flex;
+    flex-direction: column;
+    background-color: #f6f6f6;
+    width: 100%;
+    height: 370pt;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin: 0px;
+}
+
+.msg-left ,.msg-right{
+    list-style: none;
+    padding: 6px 10px;
+    margin: 8px;
+    max-width: 350px;
+    font-size: 14px;
+    word-wrap: break-word;
+}
+
+.msg-left{
+    border-radius: 20px 20px 20px 0px;
+    align-self: flex-start;
+    background-color: #fff;
+    box-shadow: -2px 2px 4px #dcdcdc;
+}
+
+.msg-right{
+    border-radius: 20px 20px 0px 20px;
+    align-self: flex-end;
+    background-color: #2d2d2d;
+    box-shadow: 2px 2px 4px #dcdcdc;
+    color: #f6f6f6;
+}
+
+.msg-left >p>span ,.msg-right > p> span{
+    display: block;
+    font-style: italic;
+    font-size: 10px;
+    margin-top: 5px;
+}
+
+
+#host_dp{
+    border-radius: 50%;
+    border: 3px solid green; 
+    padding: 0px !important; 
+    box-sizing: border-box; 
+   
+  }

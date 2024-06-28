@@ -1,0 +1,49 @@
+<% layout('/layouts/boilerplate.ejs') -%>   
+
+<body>
+    <h1 class="offset-1 mt-3 " >Profile settings</h1>
+
+    <div class="row mt-3 col-10 profileForm offset-1">
+        <%if(!user[0].dp){ %>
+            <img src="/icons/profile.png" class="profile-no-dp offset-1"></img>
+        <%}%> 
+        <% if(user[0].dp){%>
+        <img src="<%= user[0].dp%>" class="profile-dp offset-1"></img>
+        <%}%>
+        <div class="col-6 offset-1">   
+            <form method="post" action="/profile/<%= user[0]._id%>?_method=PUT"  novalidate class="needs-validation" enctype="multipart/form-data">
+               <div class="mb-3">
+                <label for="username" class="form-label" >Username </label>
+                <input name="username" id="username" value="<%= user[0].username%>"   class="form-control" type="text" required>
+                <div class="invalid-feedback">please enter valid Username</div>
+               </div>
+    
+               <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input name="email" id="email" value="<%= user[0].email%>" class="form-control" type="email" required>
+                <div class="invalid-feedback">please enter valid email</div>
+               </div>
+    
+               <%if(user[0].dp){ %>
+                <div class="mb-3">
+                    <label for="dp" class="form-label">Update Image</label>
+                    <input name="dp" type="file" class="form-control" />
+                </div>
+                <%}%>
+                
+               <%if(!user[0].dp){ %>
+                <div class="mb-3">
+                    <label for="dp" class="form-label">Upload Image</label>
+                    <input name="dp" type="file" class="form-control" />
+                   </div>
+                <%}%> 
+             
+                <button class="btn btn-dark mt-5">Change</button>
+    
+            </form>
+        </div>
+    </div>
+
+
+
+</body>
