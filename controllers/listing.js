@@ -38,12 +38,12 @@ module.exports.showListing = async (req, res) => {
 
   // Update the count value
   let newValue = list[0].cnt + 1;
-  await Listing.findOneAndUpdate({ _id: id }, { cnt: newValue });
+    let trendingStatus = newValue > 6;
 
-         
-   if(list[0].cnt >5){
-    list[0].trending=true;
-  }
+    await Listing.findOneAndUpdate(
+      { _id: id },
+      { cnt: newValue, trending: trendingStatus }
+    );
 
   // Render the view with the listing data
   res.render("listings/show.ejs", { list: list,order });
