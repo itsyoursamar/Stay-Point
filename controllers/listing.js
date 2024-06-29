@@ -40,8 +40,8 @@ module.exports.showListing = async (req, res) => {
   await Listing.findOneAndUpdate({ _id: id }, { cnt: newValue });
 
          
-  if(list[0].cnt >5){
-    trendingList.trending=true;
+   if(list[0].cnt >5){
+    list[0].trending=true;
   }
 
   // Render the view with the listing data
