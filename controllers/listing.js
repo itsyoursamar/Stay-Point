@@ -39,8 +39,8 @@ module.exports.showListing = async (req, res) => {
   let newValue = list[0].cnt + 1;
   await Listing.findOneAndUpdate({ _id: id }, { cnt: newValue });
 
-         console.log(trendingList);
-    if(trendingList.cnt >5){
+         
+    if(list.cnt >5){
     trendingList.trending=true;
   }
 
