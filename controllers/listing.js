@@ -39,6 +39,10 @@ module.exports.showListing = async (req, res) => {
   let newValue = list[0].cnt + 1;
   await Listing.findOneAndUpdate({ _id: id }, { cnt: newValue });
 
+    if(trendingList.cnt >5){
+    trendingList.trending=true;
+  }
+
   // Render the view with the listing data
   res.render("listings/show.ejs", { list: list,order });
 }
