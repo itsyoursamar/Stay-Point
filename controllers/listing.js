@@ -31,8 +31,7 @@ module.exports.showListing = async (req, res) => {
     req.flash("error", "Listing you requested for does not exist");
     return res.redirect("/Listings");
   }
-    console.log("hey ji "+list[0]);
-    console.log("hey ji "+list[0].trending);
+ 
   // Accessing the orders array
   let order=list[0].orders;
 
