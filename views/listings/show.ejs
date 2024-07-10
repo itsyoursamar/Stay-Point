@@ -281,6 +281,7 @@ function handlePayment(e) {
               }
           },
           error: function(err) {
+                console.error("AJAX error: ", err);
               alert('An error occurred. Please try again.');
           }
       });
