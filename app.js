@@ -125,9 +125,9 @@ app.use((req,res,next)=>{
 
 
 
+app.use("/Listings/:id/reviews",reviewRouter);
 app.use("/Listings",listingRouter);
 app.use("/",userRouter);
-app.use("/Listings/:id/reviews",reviewRouter);
 
 
 
