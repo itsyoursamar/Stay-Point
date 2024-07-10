@@ -206,6 +206,7 @@ const razorpayInstance = new Razorpay({
 
 router.post("/createOrder",async(req,res)=>{
   try {
+    console.log("yo mann check this out" +req.body);
       const amount = (req.body.amount*100)+(req.body.amount*100)*18/100;
       const options = {
           amount: amount,
