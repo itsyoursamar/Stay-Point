@@ -234,6 +234,8 @@ router.post("/createOrder",async(req,res)=>{
            
               }
               else{
+                console.log('ye dekh');
+                console.log(err);
                   res.status(400).send({success:false,msg:'Something went wrong!'});
               }
           }
