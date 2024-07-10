@@ -214,7 +214,6 @@
 
 function handlePayment(e) {
   var currUserId = "<%= currUser ? currUser._id : '' %>";
- console.log("see this my tester"+currUserId);
   var listId = "<%= list[0]._id %>";
 
  
@@ -227,7 +226,7 @@ function handlePayment(e) {
           description: '<%= list[0].description %>',
           image: '<%= list[0].image.url %>'
       };
-      console.log("ok OK" +formData);
+     
       $.ajax({
           url: "/createOrder",
           type: "POST",
