@@ -227,7 +227,7 @@ function handlePayment(e) {
           description: '<%= list[0].description %>',
           image: '<%= list[0].image.url %>'
       };
-      
+      console.log("ok OK" +formData);
       $.ajax({
           url: "/createOrder",
           type: "POST",
