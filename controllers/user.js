@@ -72,7 +72,7 @@ module.exports.renderCategory=async(req,res)=>{
         return res.render("listings/selCategory.ejs",{list,name});
     }
 
-    if(name === "privacy" || name==="terms")
+    if(name === "privacy" || name==="terms" || name==="payment-policy")
     {
         return res.render("listings/T&C",{name});
     }
