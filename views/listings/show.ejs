@@ -244,6 +244,7 @@ function handlePayment(e) {
                       "handler": function (response){
                           // Payment succeeded, send request to update user data
                          alert('payment succeeded');
+                           window.location.reload();
 
                          $.ajax({
                       url: "/fetchOrder",
